@@ -10,6 +10,17 @@ services:
     privileged: true
     ports:
       - "8123:8123"
+    networks:
+      hostproxy:
+        ipv4_address: 10.10.10.10
 
 volumes:
   homeassistant_data:
+
+networks:
+  hostproxy:
+    name: hostproxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

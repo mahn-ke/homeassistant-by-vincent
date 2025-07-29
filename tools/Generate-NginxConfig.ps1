@@ -1,8 +1,13 @@
+param (
+    [switch]$WithHttps = $false
+)
+
 function Generate-NginxConfig {
     param (
         [string]$fqdn,
         [string]$firstPart,
-        [string]$firstPort
+        [string]$firstPort,
+        [bool]$WithHttps = $false
     )
 
     if (-not (Get-Module -ListAvailable -Name EPS)) {
@@ -18,6 +23,7 @@ function Generate-NginxConfig {
         firstPart = $firstPart
         firstPort = $firstPort
         CERT_HOME = $env:CERT_HOME -replace '\\', '/'
+        withHttps = $withHttps
     }
     if (Test-Path "output") {
         Remove-Item "output" -Recurse -Force
@@ -29,7 +35,6 @@ function Generate-NginxConfig {
     Write-Host "NGINX config generated: $outFile"
 }
 
-# mapDNS.ps1
 function Get-FirstHostPort {
     param (
         [string]$fqdn
@@ -99,4 +104,4 @@ if (-not $firstPort) {
 
 $firstPart = $fqdn.Split('.')[0]
 
-Generate-NginxConfig -fqdn $fqdn -firstPart $firstPart -firstPort $firstPort
+Generate-NginxConfig -fqdn $fqdn -firstPart $firstPart -firstPort $firstPort -WithHttps $WithHttps

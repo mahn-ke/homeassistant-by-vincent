@@ -99,14 +99,22 @@ jobs:
       - name: Run Docker Compose
         run: docker compose up -d
 
+      - name: Generate HTTP-only NGINX configuration
+        run: ./tools/Generate-NginxConfig.ps1
+        shell: pwsh
+
+      - name: Try to apply HTTP-only NGINX configuration
+        run: ./tools/Update-NginxConfig.ps1
+        shell: pwsh
+
       - name: Generate certificates
         run: ./tools/Generate-Certificate.ps1
         shell: pwsh
 
-      - name: Generate NGINX configuration
-        run: ./tools/Generate-NginxConfig.ps1
+      - name: Generate HTTP+HTTPS NGINX configuration
+        run: ./tools/Generate-NginxConfig.ps1 -WithHttps
         shell: pwsh
 
-      - name: Try to apply NGINX configuration
+      - name: Try to apply HTTP+HTTPS NGINX configuration
         run: ./tools/Update-NginxConfig.ps1
         shell: pwsh

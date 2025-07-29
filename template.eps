@@ -22,6 +22,7 @@ server {
     }
 }
 
+<% if ($withHttps) { %>
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
@@ -57,3 +58,4 @@ server {
         add_header Access-Control-Allow-Credentials true;
     }
 }
+<% } %>

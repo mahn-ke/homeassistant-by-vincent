@@ -50,6 +50,8 @@ terraform.rc
 ############# PROJECT ############
 ##################################
 
+.DS_Store
+tfplan
 output
 nginx
 
